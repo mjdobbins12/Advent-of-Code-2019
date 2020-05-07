@@ -13,19 +13,25 @@ class Wires
 
     def find_points(wire)
         points = []
-        current_position = [0, 0]
+        current_x = 0
+        current_y = 0
         wire.each do |instruction|
+            magnitude = instruction[1..-1].to_i
             case instruction[0]
             when "R"
-                current_position[0] += instruction[1..-1].to_i
+                points << [(current_y..(current_y + magnitude)), current_x]
+                current_x += magnitude
             when "L"
-                current_position[0] -= instruction[1..-1].to_i
+                points << [((current_y + magnitude)..current_y), current_x]
+                current_x -= magnitude
             when "U"
-                current_position[1] += instruction[1..-1].to_i
+                points << [current_y, (current_x..(current_x + magnitude))]
+                current_y += magnitude
             when "L"
-                current_position[1] -= instruction[1..-1].to_i
+                points << [current_y, (current_x..(current_x + magnitude))]
+                current_y -= magnitude
             end
         end
-        current_position
+        points
     end
 end
