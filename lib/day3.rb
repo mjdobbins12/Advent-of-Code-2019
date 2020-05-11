@@ -19,19 +19,20 @@ class Wires
             magnitude = instruction[1..-1].to_i
             case instruction[0]
             when "R"
-                points << [(current_y..(current_y + magnitude)), current_x]
+                points << [(current_x..(current_x + magnitude)), current_y]
                 current_x += magnitude
             when "L"
-                points << [((current_y + magnitude)..current_y), current_x]
+                points << [((current_x - magnitude)..current_x), current_y]
                 current_x -= magnitude
             when "U"
-                points << [current_y, (current_x..(current_x + magnitude))]
+                points << [current_x, (current_y..(current_y + magnitude))]
                 current_y += magnitude
-            when "L"
-                points << [current_y, (current_x..(current_x + magnitude))]
+            when "D"
+                points << [current_x, ((current_y - magnitude)..current_y)]
                 current_y -= magnitude
             end
         end
+        p "(#{current_x}, #{current_y})"
         points
     end
 end
